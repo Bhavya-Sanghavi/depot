@@ -6,8 +6,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "line_items", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
@@ -18,6 +18,7 @@
 
     <section class="flex">
       <nav class="bg-green-900 p-6">
+        <%= render partial: 'layouts/cart', locals: {cart: @cart} %>
         <ul class="text-gray-300 leading-8">
           <li><a href="/">Home</a></li>
           <li><a href="/questions">Questions</a></li>
