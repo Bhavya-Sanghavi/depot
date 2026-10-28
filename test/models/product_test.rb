@@ -72,4 +72,13 @@ class ProductTest < ActiveSupport::TestCase
                  product.errors[:title]
   end
   
+  test "cannot delete product referenced by a line item" do
+    product = products(:ruby)
+
+    product.destroy
+
+    assert_not product.destroyed?
+    assert_includes product.errors[:base],
+      "This product cannot be deleted because it has line items."
+  end
 end

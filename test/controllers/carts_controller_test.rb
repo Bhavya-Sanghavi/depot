@@ -2,7 +2,8 @@ require "test_helper"
 
 class CartsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @cart = carts(:one)
+    post line_items_url, params: { product_id: products(:ruby).id }
+    @cart = Cart.find(session[:cart_id])
   end
 
   test "should get index" do
@@ -47,5 +48,14 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to store_index_url
+  end
+
+  test "should not show another user's cart" do
+    other_cart = carts(:two)
+
+    get cart_url(other_cart)
+
+    assert_redirected_to store_index_url
+    assert_equal "Invalid cart", flash[:notice]
   end
 end

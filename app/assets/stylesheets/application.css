@@ -8,3 +8,14 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-field {
+    @apply block shadow rounded-md border border-green-400 outline-none
+      px-3 py-2 mt-2 w-full;
+  }
+}

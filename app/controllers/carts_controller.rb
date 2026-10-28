@@ -66,6 +66,9 @@ class CartsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
       @cart = Cart.find(params.expect(:id))
+      unless @cart.id == session[:cart_id]
+        redirect_to store_index_url, notice: 'Invalid cart'
+      end
     end
 
     # Only allow a list of trusted parameters through.
