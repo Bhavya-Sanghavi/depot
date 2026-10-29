@@ -1,5 +1,4 @@
 class Order < ApplicationRecord
-
   enum :pay_type, {
     "Check" => 0,
     "Credit card" => 1,
@@ -28,7 +27,7 @@ class Order < ApplicationRecord
       payment_details[:account] = pay_type_params[:account_number]
     when "Credit card"
       payment_method = :credit_card
-      month,year = pay_type_params[:expiration_date].split(//)
+      month, year = pay_type_params[:expiration_date].split(//)
       payment_details[:cc_num] = pay_type_params[:credit_card_number]
       payment_details[:expiration_month] = month
       payment_details[:expiration_year] = year

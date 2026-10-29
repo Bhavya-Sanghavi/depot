@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
-        @product.broadcast_replace_later_to 'products', partial: 'store/product'
+        @product.broadcast_replace_later_to "products", partial: "store/product"
       else
         format.html { render :edit, status: :unprocessable_content }
         format.json { render json: @product.errors, status: :unprocessable_content }
@@ -53,7 +53,7 @@ class ProductsController < ApplicationController
     @product.destroy
 
     respond_to do |format|
-      format.html { redirect_to products_path, notice:"Product was successfully destroyed.", status: :see_other }
+      format.html { redirect_to products_path, notice: "Product was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
