@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
   resources :users
+  scope "(:locale)", locale: /en|es/ do
+    root "store#index", as: "store_index", via: :all
+  end
   resources :orders
   resources :line_items
   resources :carts
-  root "store#index", as: "store_index"
   resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

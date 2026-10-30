@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   skip_before_action :authorize, only: %i[new create]
   before_action :set_cart, only: %i[new create]
-  before_action :ensure_cart_isnt_empty, only: %i[new]
+  before_action :ensure_cart_isnt_empty, only: %i[new create]
   before_action :set_order, only: %i[ show edit update destroy ]
 
   # GET /orders or /orders.json
@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
         session[:cart_id] = nil
 
         format.html {
-          redirect_to store_index_url, notice: "Thank you for your order."
+          redirect_to store_index_url(locale: I18n.locale), notice: I18n.t(".thanks")
         }
         format.json { render :show, status: :created, location: @order }
       else

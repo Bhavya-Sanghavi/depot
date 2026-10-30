@@ -13,6 +13,15 @@
 
   <body>
     <header class="bg-green-700">
+      <aside data-controller="locale" class="absolute top-4 right-6 z-10">
+        <%= form_tag store_index_path, class: "locale" do %>
+          <%= select_tag "set_locale",
+              options_for_select(LANGUAGES, I18n.locale.to_s),
+              onchange: "this.form.submit()",
+              class: "bg-white text-gray-800 border border-gray-300 rounded-md px-3 py-2 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500" %>
+          <%= submit_tag "submit", data: { "locale-target": "submit" } %>
+        <% end %>
+      </aside>
       <%= image_tag 'logo.svg', alt: 'The Pragmatic Bookshelf' %>
     </header>
 
@@ -20,10 +29,10 @@
       <nav class="bg-green-900 p-6">
         <%= render partial: 'layouts/cart', locals: {cart: @cart} %>
         <ul class="text-gray-300 leading-8">
-          <li><a href="/">Home</a></li>
-          <li><a href="/questions">Questions</a></li>
-          <li><a href="/news">News</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/"><%= t('.home') %></a></li>
+          <li><a href="/questions"><%= t('.questions') %></a></li>
+          <li><a href="/news"><%= t('.news') %></a></li>
+          <li><a href="/contact"><%= t('.contact') %></a></li>
         </ul>
         <% if session[:user_id] %>
           <hr class="my-2">
