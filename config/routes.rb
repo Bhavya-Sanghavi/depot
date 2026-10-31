@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
+  get "support_requests" => "support_requests#index"
+  patch "support_requests/:id" => "support_requests#update", as: :support_request
   resources :users
   scope "(:locale)", locale: /en|es/ do
     root "store#index", as: "store_index", via: :all

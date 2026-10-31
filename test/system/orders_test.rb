@@ -4,63 +4,57 @@ class OrdersTest < ApplicationSystemTestCase
   include ActiveJob::TestHelper
 
   test "check dynamic fields" do
-    visit store_index_url
+    visit store_index_url(locale: :es)
 
-    click_on "Add to Cart", match: :first
+    click_on "Añadir al Carrito", match: :first
 
-    click_on "Checkout"
+    click_on "Comprar"
 
-    assert has_no_field? "Routing number"
-    assert has_no_field? "Account number"
-    assert has_no_field? "Credit card number"
-    assert has_no_field? "Expiration date"
-    assert has_no_field? "Po number"
+    assert_selector "fieldset[data-type='Check'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Credit card'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Purchase order'][hidden]", visible: :all
 
-    select "Check", from: "Pay type"
+    select "Cheque", from: "Forma de pago"
 
-    assert has_field? "Routing number"
-    assert has_field? "Account number"
-    assert has_no_field? "Credit card number"
-    assert has_no_field? "Expiration date"
-    assert has_no_field? "Po number"
+    assert_selector "fieldset[data-type='Check']:not([hidden]) #order_routing_number"
+    assert_selector "fieldset[data-type='Check']:not([hidden]) #order_account_number"
+    assert_selector "fieldset[data-type='Credit card'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Purchase order'][hidden]", visible: :all
 
-    select "Credit card", from: "Pay type"
+    select "Tarjeta de Crédito", from: "Forma de pago"
 
-    assert has_no_field? "Routing number"
-    assert has_no_field? "Account number"
-    assert has_field? "Credit card number"
-    assert has_field? "Expiration date"
-    assert has_no_field? "Po number"
+    assert_selector "fieldset[data-type='Check'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Credit card']:not([hidden]) #order_credit_card_number"
+    assert_selector "fieldset[data-type='Credit card']:not([hidden]) #order_expiration_date"
+    assert_selector "fieldset[data-type='Purchase order'][hidden]", visible: :all
 
-    select "Purchase order", from: "Pay type"
+    select "Orden de Compra", from: "Forma de pago"
 
-    assert has_no_field? "Routing number"
-    assert has_no_field? "Account number"
-    assert has_no_field? "Credit card number"
-    assert has_no_field? "Expiration date"
-    assert has_field? "Po number"
+    assert_selector "fieldset[data-type='Check'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Credit card'][hidden]", visible: :all
+    assert_selector "fieldset[data-type='Purchase order']:not([hidden]) #order_po_number"
   end
 
   test "check order and delivery" do
     LineItem.delete_all
     Order.delete_all
 
-    visit store_index_url
+    visit store_index_url(locale: :es)
 
-    click_on "Add to Cart", match: :first
+    click_on "Añadir al Carrito", match: :first
 
-    click_on "Checkout"
+    click_on "Comprar"
 
-    fill_in "Name", with: "Dave Thomas"
-    fill_in "Address", with: "123 Main Street"
-    fill_in "Email", with: "dave@example.com"
+    fill_in "Nombre", with: "Dave Thomas"
+    fill_in "Dirección", with: "123 Main Street"
+    fill_in "E-mail", with: "dave@example.com"
 
-    select "Check", from: "Pay type"
-    fill_in "Routing number", with: "123456"
-    fill_in "Account number", with: "987654"
+    select "Cheque", from: "Forma de pago"
+    fill_in "order_routing_number", with: "123456"
+    fill_in "order_account_number", with: "987654"
 
-    click_button "Place Order"
-    assert_text "Thank you for your order"
+    click_button "Realizar Pedido"
+    assert_text "Gracias por su pedido"
 
     perform_enqueued_jobs
     perform_enqueued_jobs
