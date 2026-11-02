@@ -12,8 +12,8 @@ class SupportRequestMailerTest < ActionMailer::TestCase
     mail = SupportRequestMailer.respond(support_request)
 
     assert_equal "Re: Help with my order", mail.subject
-    assert_equal ["customer@example.com"], mail.to
-    assert_equal ["support@example.com"], mail.from
+    assert_equal [ "customer@example.com" ], mail.to
+    assert_equal [ "support@example.com" ], mail.from
     assert_match "Here is our response.", mail.body.encoded
     assert_match "I need help with my order.", mail.body.encoded
   end
