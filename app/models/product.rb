@@ -2,8 +2,8 @@ class Product < ApplicationRecord
     PERMALINK_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/i
 
     has_many :line_items
-    before_validation :set_default_title, on: [:create, :update]
-    after_validation :set_default_discount_price, on: [:create, :update]
+    before_validation :set_default_title, on: [ :create, :update ]
+    after_validation :set_default_discount_price, on: [ :create, :update ]
     before_destroy :ensure_not_referenced_by_any_line_item
 
     validates :title, :description, :image_url, presence: true
