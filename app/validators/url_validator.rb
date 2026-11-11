@@ -1,4 +1,4 @@
-require "uri"
+require 'uri'
 
 class UrlValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
@@ -7,9 +7,9 @@ class UrlValidator < ActiveModel::EachValidator
     uri = URI.parse(value)
 
     unless uri.is_a?(URI::HTTP) && uri.host.present?
-      record.errors.add(attribute, "must be a valid URL")
+      record.errors.add(attribute, 'must be a valid URL')
     end
   rescue URI::InvalidURIError
-    record.errors.add(attribute, "must be a valid URL")
+    record.errors.add(attribute, 'must be a valid URL')
   end
 end
