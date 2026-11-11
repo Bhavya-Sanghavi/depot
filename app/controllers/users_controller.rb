@@ -59,6 +59,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def orders
+    @orders = current_user.orders.includes(:line_items)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

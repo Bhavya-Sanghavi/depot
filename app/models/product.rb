@@ -1,10 +1,10 @@
 class Product < ApplicationRecord
     PERMALINK_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/i
 
-    has_many :line_items
+    has_many :line_items, dependent: :restrict_with_error
+    has_many :carts, through: :line_items
     before_validation :set_default_title, on: [ :create, :update ]
     after_validation :set_default_discount_price, on: [ :create, :update ]
-    before_destroy :ensure_not_referenced_by_any_line_item
 
     validates :title, :description, :image_url, presence: true
     validates :title, uniqueness: true
@@ -18,14 +18,8 @@ class Product < ApplicationRecord
     validate :description_has_minimum_5_maximum_10_words
     validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than Discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
+    
     private
-
-    def ensure_not_referenced_by_any_line_item
-        unless line_items.empty?
-            errors.add(:base, 'This product cannot be deleted because it has line items.')
-            throw :abort
-        end
-    end
 
     def permalink_has_minimum_3_words
       return if permalink.blank?
