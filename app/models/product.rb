@@ -2,7 +2,8 @@ class Product < ApplicationRecord
     PERMALINK_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/i
 
     has_many :line_items
-
+    before_validation :set_default_title, on: [ :create, :update ]
+    after_validation :set_default_discount_price, on: [ :create, :update ]
     before_destroy :ensure_not_referenced_by_any_line_item
 
     validates :title, :description, :image_url, presence: true
@@ -44,5 +45,13 @@ class Product < ApplicationRecord
       if word_count < 5 || word_count > 10
         errors.add(:description, 'must have minimum 5 words and maximum 10 words')
       end
+    end
+
+    def set_default_title
+      self.title  = "abc" if title.blank?
+    end
+
+    def set_default_discount_price
+      self.discount_price = price unless discount_price.present?
     end
 end
