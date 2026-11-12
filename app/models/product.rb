@@ -18,7 +18,15 @@ class Product < ApplicationRecord
     validate :description_has_minimum_5_maximum_10_words
     validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than Discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
-    
+
+    scope :enabled, -> { where(enabled: true) }
+    scope :having_line_items, -> { joins(:line_items).distinct }
+
+
+    def self.titles_having_line_items
+      having_line_items.pluck(:title)
+    end
+
     private
 
     def permalink_has_minimum_3_words
@@ -42,7 +50,7 @@ class Product < ApplicationRecord
     end
 
     def set_default_title
-      self.title  = "abc" if title.blank?
+      self.title  = 'abc' if title.blank?
     end
 
     def set_default_discount_price
