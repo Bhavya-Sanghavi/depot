@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-8">
+
+  <h1 class="text-2xl mb-2">Categories:</h1>
+
+  <% @categories.each do |category| %>
+    <div class="flex flex-col gap-3">
+
+      <h2 class="text-lg font-semibold">
+        <%= category.name %>
+      </h2>
+
+      <% if category.sub_categories.any? %>
+        <div class="flex flex-col gap-2 pl-5">
+          <% category.sub_categories.each do |sub_category| %>
+            <p> <%= sub_category.name %> </p>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+
+</div>
