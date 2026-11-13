@@ -12,6 +12,10 @@ class User < ApplicationRecord
   has_many :orders
   has_many :line_items, through: :orders
   
+  has_one :address, dependent: :destroy
+
+  accepts_nested_attributes_for :address
+
   class Error < StandardError
   end
 
@@ -22,20 +26,21 @@ class User < ApplicationRecord
       raise Error, "Can't delete last user"
     end
   end
+
   def send_welcome_email
     UserMailer.with(user: self).welcome.deliver_now
   end
 
   def prevent_admin_delete
-    if email == "admin@depot.com"
-      errors.add(:base, "Cannot delete admin")
+    if email == 'admin@depot.com'
+      errors.add(:base, 'Cannot delete admin')
       throw :abort
     end
   end
 
   def prevent_admin_update
-    if email == "admin@depot.com"
-      errors.add(:base, "Cannot update admin")
+    if email == 'admin@depot.com'
+      errors.add(:base, 'Cannot update admin')
       throw :abort
     end
   end

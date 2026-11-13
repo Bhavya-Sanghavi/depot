@@ -25,12 +25,34 @@
     <%= form.text_field :email, class: "input-field" %>
   </div>
 
+  <%= form.fields_for :address do |address_form| %>
+    <div class="my-5">
+      <%= address_form.label :city %>
+      <%= address_form.text_field :city, class: "input-field"  %>
+    </div>
+
+    <div class="my-5">
+      <%= address_form.label :state %>
+      <%= address_form.text_field :state, class: "input-field"  %>
+    </div>
+
+    <div class="my-5">
+      <%= address_form.label :country %>
+      <%= address_form.text_field :country, class: "input-field"  %>
+    </div>
+
+    <div class="my-5">
+      <%= address_form.label :pincode %>
+      <%= address_form.text_field :pincode, class: "input-field"  %>
+    </div>
+  <% end %>
+
   <div class="my-5">
     <%= form.label :password, 'Password:' %>
     <%= form.password_field :password, class: "input-field" %>
-</div>
+  </div>
 
-<div class="my-5">
+  <div class="my-5">
     <%= form.label :password_confirmation, 'Confirm:' %>
 
     <%= form.password_field :password_confirmation,
