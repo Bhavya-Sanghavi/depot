@@ -22,6 +22,10 @@ class Product < ApplicationRecord
     scope :enabled, -> { where(enabled: true) }
     scope :having_line_items, -> { joins(:line_items).distinct }
 
+    belongs_to :category, optional: true
+    after_create :update_category_product_counts
+    after_destroy :update_category_product_counts
+    after_update :update_category_product_counts, if: :saved_change_to_category_id?
 
     def self.titles_having_line_items
       having_line_items.pluck(:title)
@@ -55,5 +59,10 @@ class Product < ApplicationRecord
 
     def set_default_discount_price
       self.discount_price = price unless discount_price.present?
+    end
+
+    def update_category_product_counts
+      category&.update_product_counts
+      category&.parent&.update_product_counts
     end
 end
