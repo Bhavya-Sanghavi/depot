@@ -11,21 +11,21 @@
 
   <div>
     <strong class="block font-medium mb-1">City:</strong>
-    <%= user.address.city %>
+    <%= user.address&.city %>
   </div>
 
   <div>
     <strong class="block font-medium mb-1">State:</strong>
-    <%= user.address.state %>
+    <%= user.address&.state %>
   </div>
 
   <div>
     <strong class="block font-medium mb-1">Country:</strong>
-    <%= user.address.country %>
+    <%= user.address&.country %>
   </div>
 
   <div>
     <strong class="block font-medium mb-1">Pincode:</strong>
-    <%= user.address.pincode %>
+    <%= user.address&.pincode %>
   </div>
 </div>
