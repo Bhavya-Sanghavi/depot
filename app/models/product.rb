@@ -22,7 +22,7 @@ class Product < ApplicationRecord
     scope :enabled, -> { where(enabled: true) }
     scope :having_line_items, -> { joins(:line_items).distinct }
 
-    belongs_to :category, optional: true
+    belongs_to :category
     after_create :update_category_product_counts
     after_destroy :update_category_product_counts
     after_update :update_category_product_counts, if: :saved_change_to_category_id?
