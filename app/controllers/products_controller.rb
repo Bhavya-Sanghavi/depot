@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
     @products = Product.all
     respond_to do |format|
       format.html
-      format.json { render json: @products.as_json(only: [:title], include: { category: { only: [:name] } }) }
+      format.json { render json: @products.as_json(only: [ :title ], include: { category: { only: [ :name ] } }) }
     end
   end
 
@@ -77,6 +77,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :title, :description, :image_url, :price, :enabled, :discount_price, :permalink, :category_id ])
+      params.expect(product: [ :title, :description, :image_url, :price, :enabled, :discount_price, :permalink, :category_id, { images: [] } ])
     end
 end
