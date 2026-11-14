@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
+  layout 'myorders', only: [ :orders, :line_items ]
   # GET /users or /users.json
   def index
     @users = User.order(:name)
@@ -13,10 +14,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.build_address
   end
 
   # GET /users/1/edit
   def edit
+    @user.build_address unless @user.address
   end
 
   # POST /users or /users.json
@@ -51,7 +54,7 @@ class UsersController < ApplicationController
   def destroy
     if @user.destroy
       respond_to do |format|
-        format.html { redirect_to users_path, notice: "User was successfully destroyed.", status: :see_other }
+        format.html { redirect_to users_path, notice: 'User was successfully destroyed.', status: :see_other }
         format.json { head :no_content }
       end
     else
@@ -66,7 +69,7 @@ class UsersController < ApplicationController
   def line_items
     @total_count = current_user.line_items.count
     @total_pages = (@total_count / 5.0).ceil
-    @page = [params.fetch(:page, 1).to_i, 1].max
+    @page = [ params.fetch(:page, 1).to_i, 1 ].max
     @line_items = current_user.line_items.includes(:product).order(created_at: :desc).limit(5).offset((@page - 1) * 5)
   end
 
@@ -78,7 +81,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation, address_attributes: [ :id, :city, :state, :country, :pincode ] ])
     end
 
   rescue_from User::Error do |exception|

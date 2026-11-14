@@ -9,10 +9,10 @@ class Product < ApplicationRecord
     validates :title, :description, :image_url, presence: true
     validates :title, uniqueness: true
     validates :price, numericality: { greater_than_or_equal_to: 0.01 }
-    validates :image_url, url: true, allow_blank: true, format: {
-        with: /\A.*\.(gif|jpg|png)\z/i,
-        message: 'must be a URL for GIF, JPG or PNG image.'
-    }
+    # validates :image_url, url: true, allow_blank: true, format: {
+    #     with: /\A.*\.(gif|jpg|png)\z/i,
+    #     message: 'must be a URL for GIF, JPG or PNG image.'
+    # }
     validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: 'must not have special characters or spaces' }
     validate :permalink_has_minimum_3_words
     validate :description_has_minimum_5_maximum_10_words
@@ -22,10 +22,13 @@ class Product < ApplicationRecord
     scope :enabled, -> { where(enabled: true) }
     scope :having_line_items, -> { joins(:line_items).distinct }
 
-    belongs_to :category, optional: true
+    belongs_to :category
     after_create :update_category_product_counts
     after_destroy :update_category_product_counts
     after_update :update_category_product_counts, if: :saved_change_to_category_id?
+
+    has_many_attached :images
+    validate :max_3_images
 
     def self.titles_having_line_items
       having_line_items.pluck(:title)
@@ -64,5 +67,11 @@ class Product < ApplicationRecord
     def update_category_product_counts
       category&.update_product_counts
       category&.parent&.update_product_counts
+    end
+
+    def max_3_images
+      if images.length > 3
+        errors.add(:images, 'cannot add more than 3 images')
+      end
     end
 end
