@@ -1,0 +1,39 @@
+<h1 class="text-2xl font-bold mb-6">Order Reports</h1>
+
+<%= form_with url: admin_reports_path, method: :get, class: "flex flex-wrap items-end gap-4 mb-8" do |form| %>
+  <div>
+    <%= form.label :from, "From" %>
+    <%= form.date_field :from, value: params[:from], class: "block rounded-md border px-3 py-2 mt-1" %>
+  </div>
+
+  <div>
+    <%= form.label :to, "To" %>
+    <%= form.date_field :to, value: params[:to], class: "block rounded-md border px-3 py-2 mt-1" %>
+  </div>
+
+  <%= form.submit "Filter", class: "rounded-md bg-blue-600 text-white px-4 py-2 hover:bg-blue-700" %>
+<% end %>
+
+<div class="overflow-x-auto">
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b">
+        <th class="p-3">Order ID</th>
+        <th class="p-3">Customer</th>
+        <th class="p-3">Time</th>
+        <th class="p-3">Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class="border-b">
+          <td class="p-3"><%= order.id %></td>
+          <td class="p-3"><%= order.name %></td>
+          <td class="p-3"><%= order.created_at %></td>
+          <td class="p-3"><%= number_to_currency(order.line_items.sum { |item| item.quantity * item.product.price }) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -3,13 +3,14 @@
   <head>
     <title>Pragprog Books Online Store</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-prefetch" content="false">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "line_items", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+  </head>" 
 
   <body>
     <header class="bg-green-700">
@@ -50,5 +51,9 @@
         <%= yield %>
       </main>
     </section>
+    <footer class="mt-8 border-t border-gray-200 py-4 text-center text-sm text-gray-600">
+      <p>Total page hits: <%= @hit_count %></p>
+      <p>Your IP address is: <%= @user_ip %></p>
+    </footer>
   </body>
 </html>
