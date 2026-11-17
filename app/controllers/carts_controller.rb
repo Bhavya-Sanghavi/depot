@@ -27,7 +27,7 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
-        format.html { redirect_to @cart, notice: "Cart was successfully created." }
+        format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
         format.json { render :show, status: :created, location: @cart }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -40,7 +40,7 @@ class CartsController < ApplicationController
   def update
     respond_to do |format|
       if @cart.update(cart_params)
-        format.html { redirect_to @cart, notice: "Cart was successfully updated.", status: :see_other }
+        format.html { redirect_to @cart, notice: 'Cart was successfully updated.', status: :see_other }
         format.json { render :show, status: :ok, location: @cart }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -57,7 +57,7 @@ class CartsController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to store_index_url,
-                    notice: "Your cart is currently empty"
+                    notice: 'Your cart is currently empty'
       end
       format.json { head :no_content }
     end
@@ -68,7 +68,7 @@ class CartsController < ApplicationController
     def set_cart
       @cart = Cart.find(params.expect(:id))
       unless @cart.id == session[:cart_id]
-        redirect_to store_index_url, notice: "Invalid cart"
+        redirect_to store_index_url, notice: 'Invalid cart'
       end
     end
 
@@ -79,6 +79,6 @@ class CartsController < ApplicationController
 
     def invalid_cart
       logger.error "Attempt to access invalid cart #{params[:id]}"
-      redirect_to store_index_url, notice: "Invalid cart"
+      redirect_to store_index_url, notice: 'Invalid cart'
     end
 end
