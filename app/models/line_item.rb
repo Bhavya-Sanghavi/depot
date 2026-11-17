@@ -5,7 +5,7 @@ class LineItem < ApplicationRecord
 
   validates :quantity, numericality: { greater_than: 0 }
   validates :product, presence: true
-  validates :product_id, uniqueness: { scope: :cart_id }
+  validates :product_id, uniqueness: { scope: :cart_id }, allow_nil: true
 
   def total_price
     price * quantity
