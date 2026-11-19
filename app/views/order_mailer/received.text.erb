@@ -1,10 +1,9 @@
+<%= t("order_mailer.received.greeting", name: @order.name) %>
 
-Dear <%= @order.name %>
+<%= t("order_mailer.received.thank_you") %>
 
-Thank you for your recent order from The Pragmatic Store.
-
-You ordered the following items:
+<%= t("order_mailer.received.items") %>
 
 <%= render @order.line_items -%>
 
-We'll send you a separate e-mail when your order ships.
+<%= t("order_mailer.received.shipping_notice") %>

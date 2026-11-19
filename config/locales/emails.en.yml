@@ -1,0 +1,14 @@
+en:
+  order_mailer:
+    received:
+      subject: "Pragmatic Store Order Confirmation"
+      greeting: "Dear %{name},"
+      thank_you: "Thank you for your recent order from The Pragmatic Store."
+      items: "You ordered the following items:"
+      shipping_notice: "We'll send you a separate e-mail when your order ships."
+    all_orders:
+      subject: "Your Order History"
+      greeting: "Hello %{name},"
+      summary: "Here is a summary of all your orders:"
+      order_date: "Order date:"
+      total: "Total:"

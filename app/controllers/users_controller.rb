@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation, address_attributes: [ :id, :city, :state, :country, :pincode ] ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation, :language, address_attributes: [ :id, :city, :state, :country, :pincode ] ])
     end
 
   rescue_from User::Error do |exception|

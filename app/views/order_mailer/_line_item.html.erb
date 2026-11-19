@@ -1,0 +1,16 @@
+<tr>
+  <td>
+    <% if line_item.product.images.attached? %>
+      <%= image_tag line_item.product.images.first, width: 100 %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= line_item.quantity %> ×
+    <%= line_item.product.title %>
+  </td>
+
+  <td>
+    <%= number_to_currency(line_item.total_price) %>
+  </td>
+</tr>
