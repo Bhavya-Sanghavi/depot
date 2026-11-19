@@ -4,7 +4,8 @@ class Product < ApplicationRecord
     MAXIMUM_DESCRIPTION_LENGTH = 10
 
     has_many :line_items
-
+    after_initialize :set_default_title, if: :new_record?
+    after_validation :set_default_discount_price, on: [ :create, :update ]
     before_destroy :ensure_not_referenced_by_any_line_item
 
     validates :title, :description, :image_url, presence: true
@@ -35,5 +36,13 @@ class Product < ApplicationRecord
       if word_count < MINIMUM_DESCRIPTION_LENGTH || word_count > MAXIMUM_DESCRIPTION_LENGTH
         errors.add(:description, "must have minimum #{MINIMUM_DESCRIPTION_LENGTH} words and maximum #{MAXIMUM_DESCRIPTION_LENGTH} words")
       end
+    end
+
+    def set_default_title
+      self.title  = 'abc' if title.blank?
+    end
+
+    def set_default_discount_price
+      self.discount_price = price unless discount_price.present?
     end
 end
