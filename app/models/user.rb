@@ -25,15 +25,15 @@ class User < ApplicationRecord
   end
 
   def prevent_admin_delete
-    if email == "admin@depot.com"
-      errors.add(:base, "Cannot delete admin")
+    if email == 'admin@depot.com'
+      errors.add(:base, 'Cannot delete admin')
       throw :abort
     end
   end
 
   def prevent_admin_update
-    if email == "admin@depot.com"
-      errors.add(:base, "Cannot update admin")
+    if email == 'admin@depot.com'
+      errors.add(:base, 'Cannot update admin')
       throw :abort
     end
   end
