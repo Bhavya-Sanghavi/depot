@@ -12,10 +12,10 @@ class Product < ApplicationRecord
         with: /\A.*\.(gif|jpg|png)\z/i,
         message: 'must be a URL for GIF, JPG or PNG image.'
     }
-    validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: "must not have special characters or spaces"}
+    validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: 'must not have special characters or spaces' }
     validate :permalink_has_minimum_3_words
     validate :description_has_minimum_5_maximum_10_words
-    validates :price, comparison: { greater_than: :discount_price, message: "must be greater than Discount price" }, if: -> { price.present? && discount_price.present? }
+    validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than Discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
     private
 
@@ -28,21 +28,21 @@ class Product < ApplicationRecord
 
     def permalink_has_minimum_3_words
       return if permalink.blank?
-      
+
       words = permalink.split('-')
 
       if words.length < 3
-        errors.add(:permalink, "must have minimum 3 words seperated by hyphen")
+        errors.add(:permalink, 'must have minimum 3 words seperated by hyphen')
       end
     end
 
     def description_has_minimum_5_maximum_10_words
       return if description.blank?
-      
+
       word_count = description.split.size
 
       if word_count < 5 || word_count > 10
-        errors.add(:description, "must have minimum 5 words and maximum 10 words")
+        errors.add(:description, 'must have minimum 5 words and maximum 10 words')
       end
     end
 end
