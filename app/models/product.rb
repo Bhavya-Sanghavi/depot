@@ -10,7 +10,7 @@ class Product < ApplicationRecord
     validates :price, numericality: { greater_than_or_equal_to: 0.01 }
     validates :image_url, url: true, allow_blank: true, format: {
         with: /\A.*\.(gif|jpg|png)\z/i,
-        message: "must be a URL for GIF, JPG or PNG image."
+        message: 'must be a URL for GIF, JPG or PNG image.'
     }
     validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: "must not have special characters or spaces"}
     validate :permalink_has_minimum_3_words
@@ -21,7 +21,7 @@ class Product < ApplicationRecord
 
     def ensure_not_referenced_by_any_line_item
         unless line_items.empty?
-            errors.add(:base, "This product cannot be deleted because it has line items.")
+            errors.add(:base, 'This product cannot be deleted because it has line items.')
             throw :abort
         end
     end
