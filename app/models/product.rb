@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
-    PERMALINK_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/i
+    PERMALINK_FORMAT = /\A[a-z0-9]+(?:-[a-z0-9]+){2,}\z/i
+    MINIMUM_DESCRIPTION_LENGTH = 5
+    MAXIMUM_DESCRIPTION_LENGTH = 10
 
     has_many :line_items
 
@@ -12,10 +14,9 @@ class Product < ApplicationRecord
         with: /\A.*\.(gif|jpg|png)\z/i,
         message: 'must be a URL for GIF, JPG or PNG image.'
     }
-    validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: 'must not have special characters or spaces' }
-    validate :permalink_has_minimum_3_words
-    validate :description_has_minimum_5_maximum_10_words
-    validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than Discount price' }, if: -> { price.present? && discount_price.present? }
+    validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: 'must not have special characters or spaces' }, allow_nil: true
+    validate :validate_description_length
+    validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
     private
 
@@ -26,23 +27,13 @@ class Product < ApplicationRecord
         end
     end
 
-    def permalink_has_minimum_3_words
-      return if permalink.blank?
-
-      words = permalink.split('-')
-
-      if words.length < 3
-        errors.add(:permalink, 'must have minimum 3 words seperated by hyphen')
-      end
-    end
-
-    def description_has_minimum_5_maximum_10_words
+    def validate_description_length
       return if description.blank?
 
       word_count = description.split.size
 
-      if word_count < 5 || word_count > 10
-        errors.add(:description, 'must have minimum 5 words and maximum 10 words')
+      if word_count < MINIMUM_DESCRIPTION_LENGTH || word_count > MAXIMUM_DESCRIPTION_LENGTH
+        errors.add(:description, "must have minimum #{MINIMUM_DESCRIPTION_LENGTH} words and maximum #{MAXIMUM_DESCRIPTION_LENGTH} words")
       end
     end
 end
