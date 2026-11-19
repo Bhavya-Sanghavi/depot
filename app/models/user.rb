@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be in form of valid email address' }
   after_destroy :ensure_an_admin_remains
-  after_create :send_welcome_email
+  after_create_commit :send_welcome_email
   before_destroy :prevent_admin_delete
   before_update :prevent_admin_update
 
