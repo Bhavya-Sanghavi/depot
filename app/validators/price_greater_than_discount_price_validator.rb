@@ -5,7 +5,7 @@ class PriceGreaterThanDiscountPriceValidator < ActiveModel::EachValidator
     return if value.blank? || discount_price.blank?
 
     unless value > discount_price
-      record.errors.add(attribute, "must be greater than discount price")
+      record.errors.add(attribute, 'must be greater than discount price')
     end
   end
 end
