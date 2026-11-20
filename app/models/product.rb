@@ -3,17 +3,10 @@ class Product < ApplicationRecord
     MINIMUM_DESCRIPTION_LENGTH = 5
     MAXIMUM_DESCRIPTION_LENGTH = 10
 
-<<<<<<< HEAD
     has_many :line_items, dependent: :restrict_with_error
     has_many :carts, through: :line_items
-    before_validation :set_default_title, on: [ :create, :update ]
-    after_validation :set_default_discount_price, on: [ :create, :update ]
-=======
-    has_many :line_items
     after_initialize :set_default_title, if: :new_record?
     after_validation :set_default_discount_price, on: [ :create, :update ]
-    before_destroy :ensure_not_referenced_by_any_line_item
->>>>>>> CallbacksExercises
 
     validates :title, :description, :image_url, presence: true
     validates :title, uniqueness: true

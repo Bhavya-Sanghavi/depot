@@ -11,7 +11,7 @@ class User < ApplicationRecord
   before_update :prevent_admin_update
   has_many :orders
   has_many :line_items, through: :orders
-  
+
   class Error < StandardError
   end
 
