@@ -1,7 +1,7 @@
 class LineItem < ApplicationRecord
   belongs_to :order, optional: true
   belongs_to :product
-  belongs_to :cart, optional: true
+  belongs_to :cart, optional: true, counter_cache: true
 
   validates :quantity, numericality: { greater_than: 0 }
   validates :product, presence: true

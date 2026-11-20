@@ -9,6 +9,8 @@ class User < ApplicationRecord
   after_create_commit :send_welcome_email
   before_destroy :prevent_admin_delete
   before_update :prevent_admin_update
+  has_many :orders
+  has_many :line_items, through: :orders
 
   class Error < StandardError
   end

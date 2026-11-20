@@ -3,10 +3,10 @@ class Product < ApplicationRecord
     MINIMUM_DESCRIPTION_LENGTH = 5
     MAXIMUM_DESCRIPTION_LENGTH = 10
 
-    has_many :line_items
+    has_many :line_items, dependent: :restrict_with_error
+    has_many :carts, through: :line_items
     after_initialize :set_default_title, if: :new_record?
     after_validation :set_default_discount_price, on: [ :create, :update ]
-    before_destroy :ensure_not_referenced_by_any_line_item
 
     validates :title, :description, :image_url, presence: true
     validates :title, uniqueness: true
@@ -19,14 +19,10 @@ class Product < ApplicationRecord
     validate :validate_description_length
     validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
-    private
 
-    def ensure_not_referenced_by_any_line_item
-        unless line_items.empty?
-            errors.add(:base, 'This product cannot be deleted because it has line items.')
-            throw :abort
-        end
-    end
+    scope :enabled, -> { where(enabled: true) }
+
+    private
 
     def validate_description_length
       return if description.blank?
