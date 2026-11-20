@@ -24,9 +24,7 @@ class Product < ApplicationRecord
     scope :having_line_items, -> { joins(:line_items).distinct }
 
     belongs_to :category, optional: true
-    after_create :update_category_product_counts
-    after_destroy :update_category_product_counts
-    after_update :update_category_product_counts, if: :saved_change_to_category_id?
+    after_commit :update_category_product_counts, on: [ :create, :update, :destroy ]
 
     def self.titles_having_line_items
       having_line_items.pluck(:title)
@@ -53,7 +51,18 @@ class Product < ApplicationRecord
     end
 
     def update_category_product_counts
-      category&.update_product_counts
-      category&.parent&.update_product_counts
+      category_ids =
+      if destroyed? || previously_new_record?
+        [ category_id ]
+      elsif saved_change_to_category_id?
+        saved_change_to_category_id
+      else
+        []
+      end
+
+      Category.where(id: category_ids.uniq).find_each do |category|
+        category.update_product_counts
+        category.parent&.update_product_counts
+      end
     end
 end
