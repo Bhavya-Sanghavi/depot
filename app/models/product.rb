@@ -23,6 +23,9 @@ class Product < ApplicationRecord
     scope :enabled, -> { where(enabled: true) }
     scope :having_line_items, -> { joins(:line_items).distinct }
 
+    belongs_to :category, optional: true
+    after_commit :update_category_product_counts, on: [ :create, :update, :destroy ]
+
     def self.titles_having_line_items
       having_line_items.pluck(:title)
     end
@@ -45,5 +48,21 @@ class Product < ApplicationRecord
 
     def set_default_discount_price
       self.discount_price = price unless discount_price.present?
+    end
+
+    def update_category_product_counts
+      category_ids =
+      if destroyed? || previously_new_record?
+        [ category_id ]
+      elsif saved_change_to_category_id?
+        saved_change_to_category_id
+      else
+        []
+      end
+
+      Category.where(id: category_ids.uniq).find_each do |category|
+        category.update_product_counts
+        category.parent&.update_product_counts
+      end
     end
 end
