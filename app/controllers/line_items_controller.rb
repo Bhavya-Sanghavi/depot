@@ -43,7 +43,7 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: "Line item was successfully updated.", status: :see_other }
+        format.html { redirect_to @line_item, notice: 'Line item was successfully updated.', status: :see_other }
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -59,7 +59,7 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to store_index_url, notice: "Item removed from cart."
+        redirect_to store_index_url, notice: 'Item removed from cart.'
       end
       format.turbo_stream
       format.json { head :no_content }
