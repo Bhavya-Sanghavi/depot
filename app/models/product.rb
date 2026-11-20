@@ -20,6 +20,8 @@ class Product < ApplicationRecord
     validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than discount price' }, if: -> { price.present? && discount_price.present? }
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
 
+    scope :enabled, -> { where(enabled: true) }
+
     private
 
     def validate_description_length
