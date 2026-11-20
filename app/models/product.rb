@@ -23,7 +23,6 @@ class Product < ApplicationRecord
     scope :enabled, -> { where(enabled: true) }
     scope :having_line_items, -> { joins(:line_items).distinct }
 
-
     def self.titles_having_line_items
       having_line_items.pluck(:title)
     end
