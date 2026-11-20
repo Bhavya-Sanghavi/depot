@@ -21,6 +21,11 @@ class Product < ApplicationRecord
     validates :price, price_greater_than_discount_price: true, if: -> { price.present? && discount_price.present? }
 
     scope :enabled, -> { where(enabled: true) }
+    scope :having_line_items, -> { joins(:line_items).distinct }
+
+    def self.titles_having_line_items
+      having_line_items.pluck(:title)
+    end
 
     private
 
