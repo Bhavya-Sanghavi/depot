@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   resources :products
   resources :categories, only: [ :index ]
   namespace :admin do
-    resources :reports, only: [:index]
-    resources :categories, only: [:index]
+    resources :reports, only: [ :index ]
+    resources :categories, only: [ :index ]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
