@@ -1,5 +1,5 @@
 class OrderMailer < ApplicationMailer
-  default from: "Sam Ruby <depot@example.com>"
+  default from: 'Sam Ruby <depot@example.com>'
 
   def received(order)
     @order = order
@@ -22,14 +22,14 @@ class OrderMailer < ApplicationMailer
   def shipped(order)
     @order = order
 
-    mail to: order.email, subject: "Pragmatic Store Order Shipped"
+    mail to: order.email, subject: 'Pragmatic Store Order Shipped'
   end
 
   def all_orders(user)
     @user = user
     @orders = user.orders.includes(line_items: :product)
 
-    I18n.with_locale(user.language || "en") do
+    I18n.with_locale(user.language || 'en') do
       mail(to: user.email, subject: t('order_mailer.all_orders.subject'))
     end
   end

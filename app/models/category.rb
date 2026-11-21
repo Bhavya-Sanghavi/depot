@@ -5,7 +5,7 @@ class Category < ApplicationRecord
   has_many :sub_category_products, through: :sub_categories, source: :products
 
   validates :name, presence: true
-  validates :name, uniqueness: true, if: -> { name.present? && parent_id.nil? }
+  validates :name, uniqueness: true, allow_blank: true, if: -> { parent_id.nil? }
   validates :name, uniqueness: { scope: :parent_id }, if: -> { name.present? && parent_id.present? }
   validate :subcategory_cant_have_child_category
 
@@ -16,7 +16,7 @@ class Category < ApplicationRecord
   end
 
   def update_product_counts
-    update_column(:products_count, products.count + sub_categories.joins(:products).count)
+    update_column(:products_count, products.count + sub_category_products.count)
   end
 
   private
@@ -28,7 +28,7 @@ class Category < ApplicationRecord
   end
 
   def prevent_destroy_if_subcategories_have_products
-    return unless sub_categories.joins(:products).exists?
+    return unless sub_category_products.exists?
 
     errors.add(:base, 'Cannot delete category because its subcategories have products')
     throw :abort
