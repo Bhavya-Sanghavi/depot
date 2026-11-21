@@ -1,17 +1,16 @@
-require "uri"
+require 'uri'
 
 class User < ApplicationRecord
   has_secure_password
   validates :name, presence: true, uniqueness: true
   validates :email, uniqueness: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be in form of valid email address" }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be in form of valid email address' }
   after_destroy :ensure_an_admin_remains
-  after_create :send_welcome_email
+  after_create_commit :send_welcome_email
   before_destroy :prevent_admin_delete
   before_update :prevent_admin_update
   has_many :orders
   has_many :line_items, through: :orders
-  
   has_one :address, dependent: :destroy
 
   accepts_nested_attributes_for :address

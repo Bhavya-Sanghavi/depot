@@ -63,14 +63,14 @@ class UsersController < ApplicationController
   end
 
   def orders
-    @orders = current_user.orders.includes(line_items: :product)
+    @orders = current_user.orders.includes(line_items: :product).paginate(page: params[:page], per_page: ORDERS_PER_PAGE)
   end
 
   def line_items
     @total_count = current_user.line_items.count
-    @total_pages = (@total_count / 5.0).ceil
+    @total_pages = (@total_count / ITEMS_PER_PAGE).ceil
     @page = [ params.fetch(:page, 1).to_i, 1 ].max
-    @line_items = current_user.line_items.includes(:product).order(created_at: :desc).limit(5).offset((@page - 1) * 5)
+    @line_items = current_user.line_items.includes(:product).order(created_at: :desc).limit(ITEMS_PER_PAGE).offset((@page - 1) * ITEMS_PER_PAGE)
   end
 
   private
