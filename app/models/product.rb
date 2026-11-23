@@ -8,13 +8,9 @@ class Product < ApplicationRecord
     after_initialize :set_default_title, if: :new_record?
     after_validation :set_default_discount_price, on: [ :create, :update ]
 
-    validates :title, :description, :image_url, presence: true
+    validates :title, :description, presence: true
     validates :title, uniqueness: true
     validates :price, numericality: { greater_than_or_equal_to: 0.01 }
-    # validates :image_url, url: true, allow_blank: true, format: {
-    #     with: /\A.*\.(gif|jpg|png)\z/i,
-    #     message: 'must be a URL for GIF, JPG or PNG image.'
-    # }
     validates :permalink, uniqueness: true, format: { with: PERMALINK_FORMAT, message: 'must not have special characters or spaces' }, allow_nil: true
     validate :validate_description_length
     validates :price, comparison: { greater_than: :discount_price, message: 'must be greater than discount price' }, if: -> { price.present? && discount_price.present? }
