@@ -11,6 +11,9 @@ class User < ApplicationRecord
   before_update :prevent_admin_update
   has_many :orders
   has_many :line_items, through: :orders
+  has_one :address, dependent: :destroy
+
+  accepts_nested_attributes_for :address
 
   class Error < StandardError
   end
@@ -22,6 +25,7 @@ class User < ApplicationRecord
       raise Error, "Can't delete last user"
     end
   end
+
   def send_welcome_email
     UserMailer.with(user: self).welcome.deliver_now
   end
