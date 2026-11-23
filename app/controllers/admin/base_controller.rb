@@ -6,7 +6,7 @@ module Admin
 
     def authorize_admin
       unless current_user&.role == 'admin'
-        redirect_to store_index_path, notice: 'You do not have privilege to access this section'
+        redirect_to store_index_path, notice: t('flash.no_privilege')
       end
     end
   end

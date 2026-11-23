@@ -29,6 +29,28 @@
 
 
 en:
+  flash:
+    please_log_in: "Please log in"
+    translation_not_available: "%{locale} translation not available"
+    logged_out_inactivity: "You have been logged out due to inactivity."
+    logged_out: "Logged out"
+    invalid_credentials: "Invalid user/password combination"
+    no_privilege: "You do not have privilege to access this section"
+    invalid_cart: "Invalid cart"
+    cart_empty: "Your cart is empty"
+    cart_created: "Cart was successfully created."
+    cart_updated: "Cart was successfully updated."
+    order_updated: "Order was successfully updated."
+    order_destroyed: "Order was successfully destroyed."
+    product_created: "Product was successfully created."
+    product_updated: "Product was successfully updated."
+    product_destroyed: "Product was successfully destroyed."
+    line_item_updated: "Line item was successfully updated."
+    item_removed: "Item removed from cart."
+    user_created: "User %{name} was successfully created."
+    user_updated: "User %{name} was successfully updated."
+    user_destroyed: "User was successfully destroyed."
+
   layouts:
     application:
       title: "The Pragmatic Bookshelf"

@@ -1,0 +1,83 @@
+hi:
+  activerecord:
+    errors:
+      messages:
+        blank: "khali nahi ho sakta"
+        confirmation: "password se match nahi karta"
+        greater_than: "%{count} se zyada hona chahiye"
+        greater_than_or_equal_to: "%{count} ya usse zyada hona chahiye"
+        inclusion: "di gayi list mein shamil nahi hai"
+        invalid: "sahi nahi hai"
+        not_a_number: "ek number hona chahiye"
+        taken: "pehle se istemal mein hai"
+      models:
+        category:
+          attributes:
+            name:
+              blank: "khali nahi ho sakta"
+              taken: "is parent category mein pehle se istemal mein hai"
+            parent:
+              cannot_be_subcategory: "subcategory khud kisi doosri category ki subcategory nahi ho sakti"
+            base:
+              subcategories_have_products: "category delete nahi ki ja sakti kyunki iski subcategories mein products hain"
+        line_item:
+          attributes:
+            product:
+              blank: "select karna zaroori hai"
+            product_id:
+              taken: "is cart mein pehle se maujood hai"
+            quantity:
+              greater_than: "zero se zyada hona chahiye"
+        order:
+          attributes:
+            name:
+              blank: "khali nahi ho sakta"
+            address:
+              blank: "khali nahi ho sakta"
+            email:
+              blank: "khali nahi ho sakta"
+            pay_type:
+              inclusion: "valid payment method select karein"
+        product:
+          attributes:
+            title:
+              blank: "khali nahi ho sakta"
+              taken: "pehle se istemal mein hai"
+            description:
+              blank: "khali nahi ho sakta"
+              description_word_count: "mein kam se kam %{minimum} aur zyada se zyada %{maximum} words hone chahiye"
+            images:
+              too_many: "teen se zyada images add nahi kar sakte"
+            price:
+              greater_than: "discount ke baad wali keemat se zyada honi chahiye"
+              greater_than_or_equal_to: "kam se kam %{count} honi chahiye"
+              greater_than_discount_price: "discount price ki keemat se zyada honi chahiye"
+            permalink:
+              taken: "pehle se istemal mein hai"
+              invalid: "mein special characters ya spaces nahi hone chahiye"
+            category:
+              required: "select nhi kari hai"
+        user:
+          attributes:
+            name:
+              blank: "khali nahi ho sakta"
+              taken: "pehle se istemal mein hai"
+            email:
+              invalid: "valid email address nahi hai"
+              taken: "pehle se istemal mein hai"
+            language:
+              inclusion: "supported language select karein"
+            password:
+              blank: "khali nahi ho sakta"
+            password_confirmation:
+              confirmation: "password se match nahi karta"
+            base:
+              cannot_delete_admin: "admin ko delete nahi kiya ja sakta"
+              cannot_update_admin: "admin ko update nahi kiya ja sakta"
+  errors:
+    format: "%{attribute} %{message}"
+    template:
+      body: "In fields mein problems hain:"
+      header:
+        one: "%{model} save karne se pehle %{count} error aayi"
+        other: "%{model} save karne se pehle %{count} errors aayi"

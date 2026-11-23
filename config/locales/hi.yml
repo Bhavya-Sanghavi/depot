@@ -1,0 +1,75 @@
+hi:
+  flash:
+    please_log_in: "Kripya log in karein"
+    translation_not_available: "%{locale} ke liye translation uplabdh nahi hai"
+    logged_out_inactivity: "Nishkriyata ke kaaran aapko log out kar diya gaya hai."
+    logged_out: "Log out ho gaye"
+    invalid_credentials: "Galat user/password combination"
+    no_privilege: "Is section ko access karne ki aapko permission nahi hai"
+    invalid_cart: "Galat cart"
+    cart_empty: "Aapka cart khali hai"
+    cart_created: "Cart safaltapoorvak bana diya gaya."
+    cart_updated: "Cart safaltapoorvak update kiya gaya."
+    order_updated: "Order safaltapoorvak update kiya gaya."
+    order_destroyed: "Order safaltapoorvak delete kiya gaya."
+    product_created: "Product safaltapoorvak bana diya gaya."
+    product_updated: "Product safaltapoorvak update kiya gaya."
+    product_destroyed: "Product safaltapoorvak delete kiya gaya."
+    line_item_updated: "Line item safaltapoorvak update kiya gaya."
+    item_removed: "Item cart se hata diya gaya."
+    user_created: "User %{name} safaltapoorvak bana diya gaya."
+    user_updated: "User %{name} safaltapoorvak update kiya gaya."
+    user_destroyed: "User safaltapoorvak delete kiya gaya."
+  thanks: "Aapke order ke liye dhanyavaad"
+
+  layouts:
+    application:
+      title: "The Pragmatic Bookshelf"
+      home: "Home"
+      questions: "Questions"
+      news: "News"
+      contact: "Contact"
+
+  store:
+    index:
+      title_html: "Your Pragmatic Catalog"
+    product:
+      add_html: "Add to Cart"
+  
+  carts:
+    cart:
+      title: "Your Cart"
+      empty: "Empty cart"
+      checkout: "Checkout"
+
+  number:
+    currency:
+      format:
+        unit: "$"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format: "%u%n"
+
+  orders:
+    new:
+      legend: "Please Enter Your Details"
+    form:
+      name: "Name"
+      address_html: "Address"
+      email: "E-mail"
+      pay_type: "Pay with"
+      pay_prompt_html: "Select a payment method"
+      submit: "Place Order"
+      pay_types:
+        "Check": "Check"
+        "Credit card": "Credit Card"
+        "Purchase order": "Purchase Order"
+    check:
+      routing_number: "Routing #"
+      account_number: "Account #"
+    cc:
+      cc_number: "CC #"
+      expiration_date: "Expiry"
+    po:
+      po_number: "PO #"

@@ -1,4 +1,25 @@
 es:
+  flash:
+    please_log_in: "Por favor, inicie sesion"
+    translation_not_available: "La traduccion al idioma %{locale} no esta disponible"
+    logged_out_inactivity: "Se ha cerrado su sesion debido a la inactividad."
+    logged_out: "Sesion cerrada"
+    invalid_credentials: "Combinacion invalida de usuario y contrasena"
+    no_privilege: "No tiene permisos para acceder a esta seccion"
+    invalid_cart: "Carrito invalido"
+    cart_empty: "Su carrito esta vacio"
+    cart_created: "El carrito se creo correctamente."
+    cart_updated: "El carrito se actualizo correctamente."
+    order_updated: "El pedido se actualizo correctamente."
+    order_destroyed: "El pedido se elimino correctamente."
+    product_created: "El producto se creo correctamente."
+    product_updated: "El producto se actualizo correctamente."
+    product_destroyed: "El producto se elimino correctamente."
+    line_item_updated: "El elemento de linea se actualizo correctamente."
+    item_removed: "Articulo eliminado del carrito."
+    user_created: "El usuario %{name} se creo correctamente."
+    user_updated: "El usuario %{name} se actualizo correctamente."
+    user_destroyed: "El usuario se elimino correctamente."
 
   number:
     currency:

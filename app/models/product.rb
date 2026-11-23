@@ -8,7 +8,7 @@ class Product < ApplicationRecord
     after_initialize :set_default_title, if: :new_record?
     after_validation :set_default_discount_price, on: [ :create, :update ]
 
-    validates :title, :description, :image_url, presence: true
+    validates :title, :description, presence: true
     validates :title, uniqueness: true
     validates :price, numericality: { greater_than_or_equal_to: 0.01 }
     # validates :image_url, url: true, allow_blank: true, format: {
@@ -41,7 +41,7 @@ class Product < ApplicationRecord
       word_count = description.split.size
 
       if word_count < MINIMUM_DESCRIPTION_LENGTH || word_count > MAXIMUM_DESCRIPTION_LENGTH
-        errors.add(:description, "must have minimum #{MINIMUM_DESCRIPTION_LENGTH} words and maximum #{MAXIMUM_DESCRIPTION_LENGTH} words")
+        errors.add(:description, :description_word_count, minimum: MINIMUM_DESCRIPTION_LENGTH, maximum: MAXIMUM_DESCRIPTION_LENGTH)
       end
     end
 
