@@ -1,0 +1,9 @@
+<p><%= t("order_mailer.received.greeting", name: @order.name) %></p>
+
+<p><%= t("order_mailer.received.thank_you") %></p>
+
+<p><%= t("order_mailer.received.items") %></p>
+
+<table><%= render partial: "order_mailer/line_item", collection: @order.line_items, as: :line_item %></table>
+
+<p><%= t("order_mailer.received.shipping_notice") %></p>

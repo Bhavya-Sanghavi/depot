@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope '(:locale)', locale: /en|es/ do
+  scope '(:locale)', locale: /en|es|hi/ do
     root 'store#index', as: 'store_index', via: :all
   end
   constraints(->(request) { !request.user_agent.to_s.match?(/Firefox|FxiOS/i) }) do

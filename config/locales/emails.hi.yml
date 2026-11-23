@@ -1,0 +1,15 @@
+hi:
+  order_mailer:
+    received:
+      subject: "Pragmatic Store Order ka pushtikaran"
+      greeting: "Priy %{name},"
+      thank_you: "The Pragmatic Store se order karne ke liye dhanyawaad"
+      items: "Aapne ye saaman order kiya hai:"
+      shipping_notice: "Aapka order ship hone par alag se email bheja jayega."
+    all_orders:
+      subject: "Aapke saare orders"
+      greeting: "Priy %{name},"
+      summary: "Ye aapke aaj tak ke saare orders hai:"
+      order_date: "Order ki tithi"
+      total: "Kul Raashi:"
+

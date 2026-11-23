@@ -1,0 +1,16 @@
+<%= t("order_mailer.all_orders.greeting", name: @user.name) %>
+
+<%= t("order_mailer.all_orders.summary") %>
+
+<% @orders.each do |order| %>
+<%= "Order ##{order.id}" %>
+
+<%= t("order_mailer.all_orders.order_date") %>
+<%= order.created_at %>
+
+<%= render partial: "order_mailer/line_item", collection: order.line_items, as: :line_item %>
+
+<%= t("order_mailer.all_orders.total") %>
+<%= number_to_currency(order.line_items.sum(&:total_price)) %>
+
+<% end %>

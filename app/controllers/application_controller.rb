@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   around_action :measure_execution_time
   before_action :set_user_ip
   before_action :check_inactivity
+  around_action :switch_locale
+
   private
 
   def current_user
@@ -20,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless User.find_by(id: session[:user_id])
-      redirect_to login_url, notice: 'Please log in'
+      redirect_to login_url, notice: t('flash.please_log_in')
     end
   end
 
@@ -29,7 +31,7 @@ class ApplicationController < ActionController::Base
       if I18n.available_locales.map(&:to_s).include?(params[:locale])
         session[:locale] = params[:locale]
       else
-        flash.now[:notice] = "#{params[:locale]} translation not available"
+        flash.now[:notice] = t('flash.translation_not_available', locale: params[:locale])
         logger.error flash.now[:notice]
       end
     end
@@ -64,9 +66,13 @@ class ApplicationController < ActionController::Base
   def check_inactivity
     if session[:last_activity_at] && 5.minutes.ago > session[:last_activity_at]
       reset_session
-      redirect_to login_url, notice: 'You have been logged out due to inactivity.'
+      redirect_to login_url, notice: t('flash.logged_out_inactivity')
     else
       session[:last_activity_at] = Time.current
     end
+  end
+
+  def switch_locale(&action)
+    I18n.with_locale(current_user&.language || 'en', &action)
   end
 end

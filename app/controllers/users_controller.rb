@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: "User #{@user.name} was successfully created." }
+        format.html { redirect_to users_url, notice: t('flash.user_created', name: @user.name) }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
+        format.html { redirect_to users_url, notice: t('flash.user_updated', name: @user.name) }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   def destroy
     if @user.destroy
       respond_to do |format|
-        format.html { redirect_to users_path, notice: 'User was successfully destroyed.', status: :see_other }
+        format.html { redirect_to users_path, notice: t('flash.user_destroyed'), status: :see_other }
         format.json { head :no_content }
       end
     else
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation, address_attributes: [ :id, :city, :state, :country, :pincode ] ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation, :language, address_attributes: [ :id, :city, :state, :country, :pincode ] ])
     end
 
   rescue_from User::Error do |exception|
