@@ -5,6 +5,7 @@ class Product < ApplicationRecord
 
     has_many :line_items, dependent: :restrict_with_error
     has_many :carts, through: :line_items
+    has_many :ratings, dependent: :destroy
     after_initialize :set_default_title, if: :new_record?
     after_validation :set_default_discount_price, on: [ :create, :update ]
 

@@ -9,7 +9,9 @@
     <h1 class="text-xl font-bold mb-3">
       <%= product.title %>
     </h1>
-
+    <span id="average-rating-<%= product.id %>" class="text-sm text-gray-600">
+      ⭐<%= product.ratings.average(:score)&.round(1) || "No ratings" %> / 5
+    </span>
     <p>
       <%= truncate(
             strip_tags(product.description),

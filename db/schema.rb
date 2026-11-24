@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_18_100526) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_124448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -125,6 +125,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_18_100526) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.decimal "score", precision: 2, scale: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_ratings_on_product_id"
+    t.index ["user_id", "product_id"], name: "index_ratings_on_user_id_and_product_id", unique: true
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "support_requests", force: :cascade do |t|
     t.string "email", comment: "Email of the submitter"
     t.string "subject", comment: "Subject of their support email"
@@ -155,5 +166,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_18_100526) do
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
+  add_foreign_key "ratings", "products"
+  add_foreign_key "ratings", "users"
   add_foreign_key "support_requests", "orders"
 end

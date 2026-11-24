@@ -7,7 +7,9 @@
     <% end %>
         <div>
             <h2 class="font-bold text-lg mb-3"><%= product.title %></h2>
-
+            <span id="average-rating-<%= product.id %>" class="text-sm text-gray-600">
+              ⭐<%= product.ratings.average(:score)&.round(1) || "No ratings" %> / 5
+            </span>
             <p>
             <%= sanitize(product.description) %>
             </p>
