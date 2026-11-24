@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     resources :carts
     resources :products, path: 'books'
     resources :categories, only: [ :index ]
+    resources :products do
+      resource :rating, only: [ :create ]
+    end
     namespace :admin do
       resources :reports, only: [ :index ]
       resources :categories, only: [ :index ]

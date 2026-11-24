@@ -9,6 +9,28 @@
 
   <%= render @product %>
 
+  <% if session[:user_id].present? %>
+    <div class="my-6" data-controller="rating">
+      <h3 class="font-bold text-xl mb-3">Rate this product</h3>
+
+      <%= form_with url: product_rating_path(@product), method: :post, scope: :rating,
+        data: {
+          action: "submit->rating#submit",
+          rating_target: "form"
+        } do |form| %>
+
+        <%= form.label :score, "Select rating" %>
+
+        <%= form.select :score, options_for_select((0..10).map { |n| [format("%.1f", n / 2.0), format("%.1f", n / 2.0)] }), {},
+            class: "block border rounded-md p-2 my-2" %>
+
+        <%= form.submit "Submit Rating", class: "rounded-md px-4 py-2 bg-blue-600 text-white cursor-pointer" %>
+      <% end %>
+
+      <p data-rating-target="message" class="mt-2"></p>
+    </div>
+  <% end %>
+
   <% if @product.images.attached? %>
     <div>
       <strong class="block font-medium mb-1">Images:</strong>

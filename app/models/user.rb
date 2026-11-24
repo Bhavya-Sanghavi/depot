@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :orders
   has_many :line_items, through: :orders
   has_one :address, dependent: :destroy
+  has_many :ratings, dependent: :destroy
 
   accepts_nested_attributes_for :address
 
